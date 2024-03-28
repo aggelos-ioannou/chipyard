@@ -231,6 +231,7 @@ class SageNoCConfig extends Config(
 		)
 	)) ++
 	new sage.WithSAGE(queueLength = 5, opcodes = OpcodeSet.custom0, qWaitTimeout = 20, enableHartIdCommand = true) ++
+	//new sage.WithSAGE(queueLength = 5, opcodes = OpcodeSet.custom0, qWaitTimeout = 0, enableHartIdCommand = false) ++
 	new freechips.rocketchip.subsystem.WithNBigCores(4) ++
 	new chipyard.config.AbstractConfig
 )

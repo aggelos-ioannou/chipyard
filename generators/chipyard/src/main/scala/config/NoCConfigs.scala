@@ -1,5 +1,7 @@
 package chipyard
 
+import sage._
+import freechips.rocketchip.tile.{OpcodeSet}
 import freechips.rocketchip.config.{Config}
 import freechips.rocketchip.diplomacy.{AsynchronousCrossing}
 import freechips.rocketchip.subsystem.{SBUS, MBUS}
@@ -214,4 +216,21 @@ class SbusRingNoCConfig extends Config(
   new freechips.rocketchip.subsystem.WithNBigCores(8) ++
   new freechips.rocketchip.subsystem.WithNBanks(4) ++
   new chipyard.config.AbstractConfig
+)
+class SageNoCConfig extends Config(
+	new sage.WithSAGENoC(sage.SAGENoCProtocolParams(
+		hartMappings = ListMap(
+		0 -> 0,
+		1 -> 1,
+		2 -> 2,
+		3 -> 3),
+		nocParams = NoCParams(
+		topology = Mesh2D(2, 2),
+		channelParamGen = (a, b) => UserChannelParams(Seq.fill(3) { UserVirtualChannelParams(2) }), // 3 VCs/channel, 2 buffer slots/VC
+		routingRelation = Mesh2DDimensionOrderedRouting()
+		)
+	)) ++
+	new sage.WithSAGE(queueLength = 5, opcodes = OpcodeSet.custom0, qWaitTimeout = 20, enableHartIdCommand = true) ++
+	new freechips.rocketchip.subsystem.WithNBigCores(4) ++
+	new chipyard.config.AbstractConfig
 )

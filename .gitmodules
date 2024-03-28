@@ -121,3 +121,6 @@
 [submodule "generators/mempress"]
 	path = generators/mempress
 	url = https://github.com/ucb-bar/mempress.git
+[submodule "generators/sage"]
+	path = generators/sage
+	url = https://github.com/JL102/lbl-message-queue-module.git
